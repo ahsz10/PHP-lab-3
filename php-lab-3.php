@@ -15,15 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST["submit"])) {
 
     if (preg_match("/[^A-Za-z]/",$_POST['name'] ) || strlen($name) == 0) {
         $nameError = '<span style="color:red;">You must type a name and must be in alphabet characters only</span>';
-        echo "error 1";
+        // echo "error 1";
     }
 
     if(strlen($email) == 0){
         $emailError = '<span style="color:red;">You must Enter your email</span>';
-        echo "error 2";
+        // echo "error 2";
     }
-
-    
 }
 ?>
 
@@ -54,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST["submit"])) {
         Gender: <input type="radio" name="gender" value="Female"> Female
                 <input type="radio" name="gender" value="Male">Male <span style="color:red;">*</span><br>
         
-        Select Courses: <select name="course" multiple>
+        Select Courses: <select name="subject[]" multiple size = 6>
                             <option value="PHP">PHP</option>
                             <option value="JAVA">JAVA</option>
                             <option value="MYSQL">MYSQL</option>
@@ -79,15 +77,19 @@ if(!isset($nameError) && !isset($emailError)){
     echo "Group Number: $group <br>";
     echo "Class Details: $details <br>";
     echo "Gender: $gender<br>";
-    if(isset($_POST["subject"])){
-        $subject = $_POST['subject'];
-        echo "Subject(s): "." ";
-        if (is_array($subject) || is_object($subject)){
-            foreach ($_POST['subject'] as $subject)
-                echo $subject . ", ";
-        }else{
-            echo "No Selected Subjects ";
+    if(isset($_POST["submit"])){
+        if(isset($_POST["subject"])){
+            $subject = $_POST['subject'];
+            echo "Your Course(s) are: "." ";
+            // echo $subject;
+            if (is_array($subject) || is_object($subject)){
+                foreach ($_POST['subject'] as $subject)
+                    echo $subject . ", ";
+            }else{
+                echo "No Selected Subjects ";
+            }
         }
     }
+    
 }
 ?>
