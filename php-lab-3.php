@@ -1,27 +1,31 @@
 
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST["submit"])) {
    $name =($_POST['name']);
    $email =  $_POST['email'] ;
    $group =  $_POST['gp-number'] ;
    $details =  $_POST['details'] ;
    $gender =  $_POST['gender'] ;
 
-   $flag= true;
-
+   
+//    echo $name;
+//    echo $email;
+//    echo $group;
+//    echo $details;
+//    echo $gender;
    
     if (!preg_match("/[^A-Za-z]/",$_POST['name'] ) || strlen($user) == 0) {
-    $nameError = '<span style="color:red;">You must type a name and must be in alphabet characters only</span>';
-        $flag =false;
+        $nameError = '<span style="color:red;">You must type a name and must be in alphabet characters only</span>';
+        echo "error 1";
     }
 
     if(strlen($email) == 0){
-    $emailError = '<span style="color:red;">You must Enter your email</span>';
-    $flag =false;
+        $emailError = '<span style="color:red;">You must Enter your email</span>';
+        echo "error 2";
     }
 
-    if($flag){
+    if(!isset($nameError) && !isset($emailError)){
         echo "<h2>Your given values are as: </h2> <br>";
         echo "Name: $name <br>";
         echo "Email: $email <br>";
