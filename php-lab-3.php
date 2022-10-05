@@ -1,21 +1,19 @@
-
 <?php
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST["submit"])) {
    $name =($_POST['name']);
    $email =  $_POST['email'] ;
    $group =  $_POST['gp-number'] ;
    $details =  $_POST['details'] ;
-   $gender =  $_POST['gender'] ;
-
-   
+   if (!empty($_POST['gender'])){
+    $gender =  $_POST['gender'];
+   } 
 //    echo $name;
 //    echo $email;
 //    echo $group;
 //    echo $details;
 //    echo $gender;
-   
-    if (!preg_match("/[^A-Za-z]/",$_POST['name'] ) || strlen($user) == 0) {
+
+    if (preg_match("/[^A-Za-z]/",$_POST['name'] ) || strlen($name) == 0) {
         $nameError = '<span style="color:red;">You must type a name and must be in alphabet characters only</span>';
         echo "error 1";
     }
@@ -25,24 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST["submit"])) {
         echo "error 2";
     }
 
-    if(!isset($nameError) && !isset($emailError)){
-        echo "<h2>Your given values are as: </h2> <br>";
-        echo "Name: $name <br>";
-        echo "Email: $email <br>";
-        echo "Group Number: $group <br>";
-        echo "Class Details: $details <br>";
-        echo "Gender: $gender<br>";
-        if(isset($_POST["subject"])){
-            $subject = $_POST['subject'];
-            echo "Subject(s): "." ";
-            if (is_array($subject) || is_object($subject)){
-                foreach ($_POST['subject'] as $subject)
-                    echo $subject . ", ";
-            }else{
-                echo "No Selected Subjects ";
-            }
-        }
-    }
+    
 }
 ?>
 
@@ -63,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST["submit"])) {
         <?php if(isset($nameError)) echo $nameError ?>
         <br>
 
-        Email: <input type = "text" name = "Email" /> <span style="color:red;">*</span>
+        Email: <input type = "text" name = "email" /> <span style="color:red;">*</span>
         <?php if(isset($emailError)) echo $emailError ?><br>
         
         Group #: <input type = "text" name = "gp-number" /> <br><br>
@@ -84,8 +65,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST["submit"])) {
 
         Agree: <input type = "checkbox" /><span style="color:red;">*</span><br>
         
-        <input type = "submit" value="submit"/>
+        <input type = "submit" name= "submit" value="submit"/>
     </form>
       
    </body>
 </html>
+
+<?php
+if(!isset($nameError) && !isset($emailError)){
+    echo "<h2>Your given values are as: </h2> <br>";
+    echo "Name: $name <br>";
+    echo "Email: $email <br>";
+    echo "Group Number: $group <br>";
+    echo "Class Details: $details <br>";
+    echo "Gender: $gender<br>";
+    if(isset($_POST["subject"])){
+        $subject = $_POST['subject'];
+        echo "Subject(s): "." ";
+        if (is_array($subject) || is_object($subject)){
+            foreach ($_POST['subject'] as $subject)
+                echo $subject . ", ";
+        }else{
+            echo "No Selected Subjects ";
+        }
+    }
+}
+?>
